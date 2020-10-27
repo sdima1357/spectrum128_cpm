@@ -1,0 +1,19 @@
+/LICENSE.txt/1.1/Fri Feb  6 15:27:51 2004//
+/RCSL.txt/1.1/Fri Feb  6 15:27:51 2004//
+/RPSL.txt/1.1/Fri Feb  6 15:27:51 2004//
+/assembly.h/1.8/Thu Jan 24 12:31:55 2008//
+/bitstream.c/1.2/Wed Jul 23 22:12:09 2003//
+/buffers.c/1.2/Wed Aug  6 23:30:55 2003//
+/coder.h/1.7/Thu May  5 16:15:10 2005//
+/dct32.c/1.1/Fri Jul 11 18:22:36 2003//
+/dequant.c/1.2/Tue Aug  5 21:25:37 2003//
+/dqchan.c/1.3/Tue Aug  5 21:25:37 2003//
+/huffman.c/1.2/Wed Jul 23 22:12:09 2003//
+/hufftabs.c/1.3/Mon Apr  4 18:30:23 2005//
+/imdct.c/1.1/Fri Jul 11 18:22:36 2003//
+/polyphase.c/1.3/Wed May 11 14:36:23 2005//
+/scalfact.c/1.2/Wed Jul 23 22:12:09 2003//
+/stproc.c/1.3/Mon Apr  4 18:30:23 2005//
+/subband.c/1.1/Fri Jul 11 18:22:36 2003//
+/trigtabs_fixpt.c/1.2/Fri Jun 19 06:50:58 2009//
+D

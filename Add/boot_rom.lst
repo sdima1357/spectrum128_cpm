@@ -1,0 +1,1112 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.5.0 #9253 (Mar 24 2016) (Linux)
+                              4 ; This file was generated Sun Aug  2 21:07:10 2020
+                              5 ;--------------------------------------------------------
+                              6 	.module boot_rom
+                              7 	.optsdcc -mz80
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _main
+                             13 	.globl _perfTest
+                             14 	.globl _xx_time_get_time
+                             15 	.globl _HAL_GetTick
+                             16 	.globl _Delay
+                             17 	.globl _CLOCK16F
+                             18 	.globl _CLOCK32F
+                             19 	.globl __NMI_InterruptHandler
+                             20 	.globl __IM1_InterruptHandler
+                             21 	.globl _printf
+                             22 	.globl _C
+                             23 	.globl _B
+                             24 	.globl _A
+                             25 	.globl _temp1
+                             26 	.globl _mess
+                             27 	.globl _sarr
+                             28 	.globl _putchar
+                             29 ;--------------------------------------------------------
+                             30 ; special function registers
+                             31 ;--------------------------------------------------------
+                     0004    32 _IO4	=	0x0004
+                     0002    33 _IO2	=	0x0002
+                     0080    34 _IO80	=	0x0080
+                     0081    35 _IO81	=	0x0081
+                     0060    36 _IO60	=	0x0060
+                     0061    37 _IO61	=	0x0061
+                     0062    38 _IO62	=	0x0062
+                     0063    39 _IO63	=	0x0063
+                     0005    40 _L0	=	0x0005
+                     0006    41 _L1	=	0x0006
+                     0007    42 _L2	=	0x0007
+                             43 ;--------------------------------------------------------
+                             44 ; ram data
+                             45 ;--------------------------------------------------------
+                             46 	.area _DATA
+   0000                      47 _sarr::
+   0000                      48 	.ds 4000
+                             49 ;--------------------------------------------------------
+                             50 ; ram data
+                             51 ;--------------------------------------------------------
+                             52 	.area _INITIALIZED
+   0000                      53 _mess::
+   0000                      54 	.ds 2
+   0002                      55 _temp1::
+   0002                      56 	.ds 2
+   0004                      57 _A::
+   0004                      58 	.ds 2
+   0006                      59 _B::
+   0006                      60 	.ds 2
+   0008                      61 _C::
+   0008                      62 	.ds 2
+                             63 ;--------------------------------------------------------
+                             64 ; absolute external ram data
+                             65 ;--------------------------------------------------------
+                             66 	.area _DABS (ABS)
+                             67 ;--------------------------------------------------------
+                             68 ; global & static initialisations
+                             69 ;--------------------------------------------------------
+                             70 	.area _HOME
+                             71 	.area _GSINIT
+                             72 	.area _GSFINAL
+                             73 	.area _GSINIT
+                             74 ;--------------------------------------------------------
+                             75 ; Home
+                             76 ;--------------------------------------------------------
+                             77 	.area _HOME
+                             78 	.area _HOME
+                             79 ;--------------------------------------------------------
+                             80 ; code
+                             81 ;--------------------------------------------------------
+                             82 	.area _CODE
+                             83 ;boot_rom.c:151: void _IM1_InterruptHandler(void)  __interrupt
+                             84 ;	---------------------------------
+                             85 ; Function _IM1_InterruptHandler
+                             86 ; ---------------------------------
+   0000                      87 __IM1_InterruptHandler::
+   0000 F5            [11]   88 	push	af
+   0001 C5            [11]   89 	push	bc
+   0002 D5            [11]   90 	push	de
+   0003 E5            [11]   91 	push	hl
+   0004 FD E5         [15]   92 	push	iy
+                             93 ;boot_rom.c:155: __endasm;
+   0006 FB            [ 4]   94 	ei
+   0007 FD E1         [14]   95 	pop	iy
+   0009 E1            [10]   96 	pop	hl
+   000A D1            [10]   97 	pop	de
+   000B C1            [10]   98 	pop	bc
+   000C F1            [10]   99 	pop	af
+   000D ED 4D         [14]  100 	reti
+                            101 ;boot_rom.c:157: void _NMI_InterruptHandler(void) __critical  __interrupt
+                            102 ;	---------------------------------
+                            103 ; Function _NMI_InterruptHandler
+                            104 ; ---------------------------------
+   000F                     105 __NMI_InterruptHandler::
+   000F F5            [11]  106 	push	af
+   0010 C5            [11]  107 	push	bc
+   0011 D5            [11]  108 	push	de
+   0012 E5            [11]  109 	push	hl
+   0013 FD E5         [15]  110 	push	iy
+                            111 ;boot_rom.c:159: temp1++;
+   0015 21r02r00      [10]  112 	ld	hl, #_temp1+0
+   0018 34            [11]  113 	inc	(hl)
+   0019 20 04         [12]  114 	jr	NZ,00103$
+   001B 21r03r00      [10]  115 	ld	hl, #_temp1+1
+   001E 34            [11]  116 	inc	(hl)
+   001F                     117 00103$:
+   001F FD E1         [14]  118 	pop	iy
+   0021 E1            [10]  119 	pop	hl
+   0022 D1            [10]  120 	pop	de
+   0023 C1            [10]  121 	pop	bc
+   0024 F1            [10]  122 	pop	af
+   0025 ED 45         [14]  123 	retn
+                            124 ;boot_rom.c:161: uint32_t CLOCK32F()
+                            125 ;	---------------------------------
+                            126 ; Function CLOCK32F
+                            127 ; ---------------------------------
+   0027                     128 _CLOCK32F::
+   0027 F5            [11]  129 	push	af
+   0028 F5            [11]  130 	push	af
+                            131 ;boot_rom.c:164: uint8_t* pnt = (uint8_t*)&res;
+   0029 21 00 00      [10]  132 	ld	hl,#0x0000
+   002C 39            [11]  133 	add	hl,sp
+   002D EB            [ 4]  134 	ex	de,hl
+                            135 ;boot_rom.c:165: pnt[0]  = IO60;
+   002E DB 60         [11]  136 	in	a,(_IO60)
+   0030 12            [ 7]  137 	ld	(de),a
+                            138 ;boot_rom.c:166: pnt[1]  = IO61;
+   0031 6B            [ 4]  139 	ld	l, e
+   0032 62            [ 4]  140 	ld	h, d
+   0033 23            [ 6]  141 	inc	hl
+   0034 DB 61         [11]  142 	in	a,(_IO61)
+   0036 77            [ 7]  143 	ld	(hl),a
+                            144 ;boot_rom.c:167: pnt[2]  = IO62;
+   0037 6B            [ 4]  145 	ld	l, e
+   0038 62            [ 4]  146 	ld	h, d
+   0039 23            [ 6]  147 	inc	hl
+   003A 23            [ 6]  148 	inc	hl
+   003B DB 62         [11]  149 	in	a,(_IO62)
+   003D 77            [ 7]  150 	ld	(hl),a
+                            151 ;boot_rom.c:168: pnt[3]  = IO63;
+   003E EB            [ 4]  152 	ex	de,hl
+   003F 23            [ 6]  153 	inc	hl
+   0040 23            [ 6]  154 	inc	hl
+   0041 23            [ 6]  155 	inc	hl
+   0042 DB 63         [11]  156 	in	a,(_IO63)
+   0044 77            [ 7]  157 	ld	(hl),a
+                            158 ;boot_rom.c:169: return res;
+   0045 FD 21 00 00   [14]  159 	ld	iy,#0
+   0049 FD 39         [15]  160 	add	iy,sp
+   004B FD 6E 00      [19]  161 	ld	l,0 (iy)
+   004E FD 66 01      [19]  162 	ld	h,1 (iy)
+   0051 FD 5E 02      [19]  163 	ld	e,2 (iy)
+   0054 FD 56 03      [19]  164 	ld	d,3 (iy)
+   0057 F1            [10]  165 	pop	af
+   0058 F1            [10]  166 	pop	af
+   0059 C9            [10]  167 	ret
+                            168 ;boot_rom.c:171: uint16_t CLOCK16F()
+                            169 ;	---------------------------------
+                            170 ; Function CLOCK16F
+                            171 ; ---------------------------------
+   005A                     172 _CLOCK16F::
+   005A F5            [11]  173 	push	af
+                            174 ;boot_rom.c:174: uint8_t* pnt = (uint8_t*)&res;
+   005B 21 00 00      [10]  175 	ld	hl,#0x0000
+   005E 39            [11]  176 	add	hl,sp
+                            177 ;boot_rom.c:175: pnt[0]  = IO60;
+   005F DB 60         [11]  178 	in	a,(_IO60)
+   0061 77            [ 7]  179 	ld	(hl),a
+                            180 ;boot_rom.c:176: pnt[1]  = IO61;
+   0062 23            [ 6]  181 	inc	hl
+   0063 DB 61         [11]  182 	in	a,(_IO61)
+   0065 77            [ 7]  183 	ld	(hl),a
+                            184 ;boot_rom.c:177: return res;
+   0066 E1            [10]  185 	pop	hl
+   0067 E5            [11]  186 	push	hl
+   0068 F1            [10]  187 	pop	af
+   0069 C9            [10]  188 	ret
+                            189 ;boot_rom.c:184: void     Delay (int delay)
+                            190 ;	---------------------------------
+                            191 ; Function Delay
+                            192 ; ---------------------------------
+   006A                     193 _Delay::
+   006A DD E5         [15]  194 	push	ix
+   006C DD 21 00 00   [14]  195 	ld	ix,#0
+   0070 DD 39         [15]  196 	add	ix,sp
+                            197 ;boot_rom.c:186: uint16_t sstop = CLOCK16+delay;
+   0072 CDr5Ar00      [17]  198 	call	_CLOCK16F
+   0075 DD 5E 04      [19]  199 	ld	e,4 (ix)
+   0078 DD 56 05      [19]  200 	ld	d,5 (ix)
+   007B 19            [11]  201 	add	hl,de
+   007C EB            [ 4]  202 	ex	de,hl
+                            203 ;boot_rom.c:187: while( (CLOCK16 - sstop)>0x7fffu)
+   007D                     204 00101$:
+   007D D5            [11]  205 	push	de
+   007E CDr5Ar00      [17]  206 	call	_CLOCK16F
+   0081 D1            [10]  207 	pop	de
+   0082 BF            [ 4]  208 	cp	a, a
+   0083 ED 52         [15]  209 	sbc	hl, de
+   0085 3E FF         [ 7]  210 	ld	a,#0xFF
+   0087 BD            [ 4]  211 	cp	a, l
+   0088 3E 7F         [ 7]  212 	ld	a,#0x7F
+   008A 9C            [ 4]  213 	sbc	a, h
+   008B 38 F0         [12]  214 	jr	C,00101$
+   008D DD E1         [14]  215 	pop	ix
+   008F C9            [10]  216 	ret
+                            217 ;boot_rom.c:194: void putchar(char c)
+                            218 ;	---------------------------------
+                            219 ; Function putchar
+                            220 ; ---------------------------------
+   0090                     221 _putchar::
+                            222 ;boot_rom.c:196: if(c == '\n') 
+   0090 21 02 00      [10]  223 	ld	hl, #2+0
+   0093 39            [11]  224 	add	hl, sp
+   0094 7E            [ 7]  225 	ld	a, (hl)
+   0095 D6 0A         [ 7]  226 	sub	a, #0x0A
+   0097 20 0C         [12]  227 	jr	NZ,00105$
+                            228 ;boot_rom.c:198: while((IO80&2)!=2);
+   0099                     229 00101$:
+   0099 DB 80         [11]  230 	in	a,(_IO80)
+   009B E6 02         [ 7]  231 	and	a, #0x02
+   009D D6 02         [ 7]  232 	sub	a, #0x02
+   009F 20 F8         [12]  233 	jr	NZ,00101$
+                            234 ;boot_rom.c:201: IO81  = '\r' ;
+   00A1 3E 0D         [ 7]  235 	ld	a,#0x0D
+   00A3 D3 81         [11]  236 	out	(_IO81),a
+   00A5                     237 00105$:
+                            238 ;boot_rom.c:205: A = IO80;
+   00A5 DB 80         [11]  239 	in	a,(_IO80)
+   00A7 32r04r00      [13]  240 	ld	(#_A + 0),a
+   00AA 21r05r00      [10]  241 	ld	hl,#_A + 1
+   00AD 36 00         [10]  242 	ld	(hl), #0x00
+                            243 ;boot_rom.c:206: while((IO80&2)!=2);
+   00AF                     244 00106$:
+   00AF DB 80         [11]  245 	in	a,(_IO80)
+   00B1 E6 02         [ 7]  246 	and	a, #0x02
+   00B3 D6 02         [ 7]  247 	sub	a, #0x02
+   00B5 20 F8         [12]  248 	jr	NZ,00106$
+                            249 ;boot_rom.c:208: B =  IO80;
+   00B7 DB 80         [11]  250 	in	a,(_IO80)
+   00B9 32r06r00      [13]  251 	ld	(#_B + 0),a
+   00BC 21r07r00      [10]  252 	ld	hl,#_B + 1
+   00BF 36 00         [10]  253 	ld	(hl), #0x00
+                            254 ;boot_rom.c:211: IO81 = c;
+   00C1 21 02 00      [10]  255 	ld	hl, #2+0
+   00C4 39            [11]  256 	add	hl, sp
+   00C5 7E            [ 7]  257 	ld	a, (hl)
+   00C6 D3 81         [11]  258 	out	(_IO81),a
+                            259 ;boot_rom.c:212: C = IO80;
+   00C8 DB 80         [11]  260 	in	a,(_IO80)
+   00CA 32r08r00      [13]  261 	ld	(#_C + 0),a
+   00CD 21r09r00      [10]  262 	ld	hl,#_C + 1
+   00D0 36 00         [10]  263 	ld	(hl), #0x00
+   00D2 C9            [10]  264 	ret
+                            265 ;boot_rom.c:215: uint32_t HAL_GetTick()
+                            266 ;	---------------------------------
+                            267 ; Function HAL_GetTick
+                            268 ; ---------------------------------
+   00D3                     269 _HAL_GetTick::
+                            270 ;boot_rom.c:217: return CLOCK32;
+   00D3 C3r27r00      [10]  271 	jp	_CLOCK32F
+                            272 ;boot_rom.c:219: uint32_t xx_time_get_time()
+                            273 ;	---------------------------------
+                            274 ; Function xx_time_get_time
+                            275 ; ---------------------------------
+   00D6                     276 _xx_time_get_time::
+                            277 ;boot_rom.c:221: return CLOCK32;	
+   00D6 C3r27r00      [10]  278 	jp	_CLOCK32F
+                            279 ;boot_rom.c:226: void perfTest() 
+                            280 ;	---------------------------------
+                            281 ; Function perfTest
+                            282 ; ---------------------------------
+   00D9                     283 _perfTest::
+   00D9 DD E5         [15]  284 	push	ix
+   00DB DD 21 00 00   [14]  285 	ld	ix,#0
+   00DF DD 39         [15]  286 	add	ix,sp
+   00E1 21 E0 FF      [10]  287 	ld	hl,#-32
+   00E4 39            [11]  288 	add	hl,sp
+   00E5 F9            [ 6]  289 	ld	sp,hl
+                            290 ;boot_rom.c:234: for(i=1;i<=16;i*=2)
+   00E6 DD 36 E4 01   [19]  291 	ld	-28 (ix),#0x01
+   00EA DD 36 E5 00   [19]  292 	ld	-27 (ix),#0x00
+   00EE                     293 00112$:
+                            294 ;boot_rom.c:237: now = (xx_time_get_time());
+   00EE CDrD6r00      [17]  295 	call	_xx_time_get_time
+   00F1 DD 75 F4      [19]  296 	ld	-12 (ix),l
+   00F4 DD 74 F5      [19]  297 	ld	-11 (ix),h
+   00F7 DD 73 F6      [19]  298 	ld	-10 (ix),e
+   00FA DD 72 F7      [19]  299 	ld	-9 (ix),d
+                            300 ;boot_rom.c:238: for( k=0;k<SIZE/i;k++)
+   00FD DD 6E E4      [19]  301 	ld	l,-28 (ix)
+   0100 DD 66 E5      [19]  302 	ld	h,-27 (ix)
+   0103 E5            [11]  303 	push	hl
+   0104 21 E8 03      [10]  304 	ld	hl,#0x03E8
+   0107 E5            [11]  305 	push	hl
+   0108 CDr00r00      [17]  306 	call	__divsint
+   010B F1            [10]  307 	pop	af
+   010C F1            [10]  308 	pop	af
+   010D DD 74 F9      [19]  309 	ld	-7 (ix),h
+   0110 DD 75 F8      [19]  310 	ld	-8 (ix),l
+   0113 DD 36 E6 00   [19]  311 	ld	-26 (ix),#0x00
+   0117 DD 36 E7 00   [19]  312 	ld	-25 (ix),#0x00
+   011B                     313 00107$:
+   011B DD 7E E6      [19]  314 	ld	a,-26 (ix)
+   011E DD 96 F8      [19]  315 	sub	a, -8 (ix)
+   0121 DD 7E E7      [19]  316 	ld	a,-25 (ix)
+   0124 DD 9E F9      [19]  317 	sbc	a, -7 (ix)
+   0127 E2r2Cr01      [10]  318 	jp	PO, 00164$
+   012A EE 80         [ 7]  319 	xor	a, #0x80
+   012C                     320 00164$:
+   012C F2r8Ar01      [10]  321 	jp	P,00101$
+                            322 ;boot_rom.c:240: sarr[k]=k;
+   012F DD 7E E6      [19]  323 	ld	a,-26 (ix)
+   0132 DD 77 FA      [19]  324 	ld	-6 (ix),a
+   0135 DD 7E E7      [19]  325 	ld	a,-25 (ix)
+   0138 DD 77 FB      [19]  326 	ld	-5 (ix),a
+   013B 3E 03         [ 7]  327 	ld	a,#0x02+1
+   013D 18 08         [12]  328 	jr	00166$
+   013F                     329 00165$:
+   013F DD CB FA 26   [23]  330 	sla	-6 (ix)
+   0143 DD CB FB 16   [23]  331 	rl	-5 (ix)
+   0147                     332 00166$:
+   0147 3D            [ 4]  333 	dec	a
+   0148 20 F5         [12]  334 	jr	NZ,00165$
+   014A 3Er00         [ 7]  335 	ld	a,#<(_sarr)
+   014C DD 86 FA      [19]  336 	add	a, -6 (ix)
+   014F DD 77 FA      [19]  337 	ld	-6 (ix),a
+   0152 3Es00         [ 7]  338 	ld	a,#>(_sarr)
+   0154 DD 8E FB      [19]  339 	adc	a, -5 (ix)
+   0157 DD 77 FB      [19]  340 	ld	-5 (ix),a
+   015A DD 7E E6      [19]  341 	ld	a,-26 (ix)
+   015D DD 77 FC      [19]  342 	ld	-4 (ix),a
+   0160 DD 7E E7      [19]  343 	ld	a,-25 (ix)
+   0163 DD 77 FD      [19]  344 	ld	-3 (ix),a
+   0166 DD 7E E7      [19]  345 	ld	a,-25 (ix)
+   0169 17            [ 4]  346 	rla
+   016A 9F            [ 4]  347 	sbc	a, a
+   016B DD 77 FE      [19]  348 	ld	-2 (ix),a
+   016E DD 77 FF      [19]  349 	ld	-1 (ix),a
+   0171 DD 5E FA      [19]  350 	ld	e,-6 (ix)
+   0174 DD 56 FB      [19]  351 	ld	d,-5 (ix)
+   0177 21 1C 00      [10]  352 	ld	hl, #0x001C
+   017A 39            [11]  353 	add	hl, sp
+   017B 01 04 00      [10]  354 	ld	bc, #0x0004
+   017E ED B0         [21]  355 	ldir
+                            356 ;boot_rom.c:238: for( k=0;k<SIZE/i;k++)
+   0180 DD 34 E6      [23]  357 	inc	-26 (ix)
+   0183 20 96         [12]  358 	jr	NZ,00107$
+   0185 DD 34 E7      [23]  359 	inc	-25 (ix)
+   0188 18 91         [12]  360 	jr	00107$
+   018A                     361 00101$:
+                            362 ;boot_rom.c:242: end = (xx_time_get_time())-now;
+   018A CDrD6r00      [17]  363 	call	_xx_time_get_time
+   018D 7D            [ 4]  364 	ld	a,l
+   018E DD 96 F4      [19]  365 	sub	a, -12 (ix)
+   0191 DD 77 FC      [19]  366 	ld	-4 (ix),a
+   0194 7C            [ 4]  367 	ld	a,h
+   0195 DD 9E F5      [19]  368 	sbc	a, -11 (ix)
+   0198 DD 77 FD      [19]  369 	ld	-3 (ix),a
+   019B 7B            [ 4]  370 	ld	a,e
+   019C DD 9E F6      [19]  371 	sbc	a, -10 (ix)
+   019F DD 77 FE      [19]  372 	ld	-2 (ix),a
+   01A2 7A            [ 4]  373 	ld	a,d
+   01A3 DD 9E F7      [19]  374 	sbc	a, -9 (ix)
+   01A6 DD 77 FF      [19]  375 	ld	-1 (ix),a
+                            376 ;boot_rom.c:243: printf("full %ld uS\n",end*i);
+   01A9 DD 5E E4      [19]  377 	ld	e,-28 (ix)
+   01AC DD 56 E5      [19]  378 	ld	d,-27 (ix)
+   01AF DD 7E E5      [19]  379 	ld	a,-27 (ix)
+   01B2 17            [ 4]  380 	rla
+   01B3 9F            [ 4]  381 	sbc	a, a
+   01B4 6F            [ 4]  382 	ld	l,a
+   01B5 67            [ 4]  383 	ld	h,a
+   01B6 E5            [11]  384 	push	hl
+   01B7 D5            [11]  385 	push	de
+   01B8 DD 6E FE      [19]  386 	ld	l,-2 (ix)
+   01BB DD 66 FF      [19]  387 	ld	h,-1 (ix)
+   01BE E5            [11]  388 	push	hl
+   01BF DD 6E FC      [19]  389 	ld	l,-4 (ix)
+   01C2 DD 66 FD      [19]  390 	ld	h,-3 (ix)
+   01C5 E5            [11]  391 	push	hl
+   01C6 CDr00r00      [17]  392 	call	__mullong
+   01C9 F1            [10]  393 	pop	af
+   01CA F1            [10]  394 	pop	af
+   01CB F1            [10]  395 	pop	af
+   01CC F1            [10]  396 	pop	af
+   01CD EB            [ 4]  397 	ex	de, hl
+   01CE 01r2Cr04      [10]  398 	ld	bc,#___str_0
+   01D1 E5            [11]  399 	push	hl
+   01D2 D5            [11]  400 	push	de
+   01D3 C5            [11]  401 	push	bc
+   01D4 CDr00r00      [17]  402 	call	_printf
+   01D7 21 06 00      [10]  403 	ld	hl,#6
+   01DA 39            [11]  404 	add	hl,sp
+   01DB F9            [ 6]  405 	ld	sp,hl
+                            406 ;boot_rom.c:246: now = (xx_time_get_time());
+   01DC CDrD6r00      [17]  407 	call	_xx_time_get_time
+   01DF DD 75 FC      [19]  408 	ld	-4 (ix),l
+   01E2 DD 74 FD      [19]  409 	ld	-3 (ix),h
+   01E5 DD 73 FE      [19]  410 	ld	-2 (ix),e
+   01E8 DD 72 FF      [19]  411 	ld	-1 (ix),d
+                            412 ;boot_rom.c:247: summ = 0;
+   01EB AF            [ 4]  413 	xor	a, a
+   01EC DD 77 F4      [19]  414 	ld	-12 (ix),a
+   01EF DD 77 F5      [19]  415 	ld	-11 (ix),a
+   01F2 DD 77 F6      [19]  416 	ld	-10 (ix),a
+   01F5 DD 77 F7      [19]  417 	ld	-9 (ix),a
+                            418 ;boot_rom.c:248: for( k=1;k<SIZE/i;k++)
+   01F8 DD 6E E4      [19]  419 	ld	l,-28 (ix)
+   01FB DD 66 E5      [19]  420 	ld	h,-27 (ix)
+   01FE E5            [11]  421 	push	hl
+   01FF 21 E8 03      [10]  422 	ld	hl,#0x03E8
+   0202 E5            [11]  423 	push	hl
+   0203 CDr00r00      [17]  424 	call	__divsint
+   0206 F1            [10]  425 	pop	af
+   0207 F1            [10]  426 	pop	af
+   0208 DD 74 FB      [19]  427 	ld	-5 (ix),h
+   020B DD 75 FA      [19]  428 	ld	-6 (ix),l
+   020E 11 01 00      [10]  429 	ld	de,#0x0001
+   0211                     430 00110$:
+   0211 7B            [ 4]  431 	ld	a,e
+   0212 DD 96 FA      [19]  432 	sub	a, -6 (ix)
+   0215 7A            [ 4]  433 	ld	a,d
+   0216 DD 9E FB      [19]  434 	sbc	a, -5 (ix)
+   0219 E2r1Er02      [10]  435 	jp	PO, 00168$
+   021C EE 80         [ 7]  436 	xor	a, #0x80
+   021E                     437 00168$:
+   021E F2r51r02      [10]  438 	jp	P,00102$
+                            439 ;boot_rom.c:250: summ+=sarr[k];
+   0221 6B            [ 4]  440 	ld	l, e
+   0222 62            [ 4]  441 	ld	h, d
+   0223 29            [11]  442 	add	hl, hl
+   0224 29            [11]  443 	add	hl, hl
+   0225 01r00r00      [10]  444 	ld	bc,#_sarr
+   0228 09            [11]  445 	add	hl,bc
+   0229 46            [ 7]  446 	ld	b,(hl)
+   022A 23            [ 6]  447 	inc	hl
+   022B 4E            [ 7]  448 	ld	c,(hl)
+   022C 23            [ 6]  449 	inc	hl
+   022D 23            [ 6]  450 	inc	hl
+   022E 7E            [ 7]  451 	ld	a,(hl)
+   022F 2B            [ 6]  452 	dec	hl
+   0230 6E            [ 7]  453 	ld	l,(hl)
+   0231 67            [ 4]  454 	ld	h,a
+   0232 DD 7E F4      [19]  455 	ld	a,-12 (ix)
+   0235 80            [ 4]  456 	add	a, b
+   0236 DD 77 F4      [19]  457 	ld	-12 (ix),a
+   0239 DD 7E F5      [19]  458 	ld	a,-11 (ix)
+   023C 89            [ 4]  459 	adc	a, c
+   023D DD 77 F5      [19]  460 	ld	-11 (ix),a
+   0240 DD 7E F6      [19]  461 	ld	a,-10 (ix)
+   0243 8D            [ 4]  462 	adc	a, l
+   0244 DD 77 F6      [19]  463 	ld	-10 (ix),a
+   0247 DD 7E F7      [19]  464 	ld	a,-9 (ix)
+   024A 8C            [ 4]  465 	adc	a, h
+   024B DD 77 F7      [19]  466 	ld	-9 (ix),a
+                            467 ;boot_rom.c:248: for( k=1;k<SIZE/i;k++)
+   024E 13            [ 6]  468 	inc	de
+   024F 18 C0         [12]  469 	jr	00110$
+   0251                     470 00102$:
+                            471 ;boot_rom.c:252: end = (xx_time_get_time())-now;
+   0251 CDrD6r00      [17]  472 	call	_xx_time_get_time
+   0254 7D            [ 4]  473 	ld	a,l
+   0255 DD 96 FC      [19]  474 	sub	a, -4 (ix)
+   0258 DD 77 FC      [19]  475 	ld	-4 (ix),a
+   025B 7C            [ 4]  476 	ld	a,h
+   025C DD 9E FD      [19]  477 	sbc	a, -3 (ix)
+   025F DD 77 FD      [19]  478 	ld	-3 (ix),a
+   0262 7B            [ 4]  479 	ld	a,e
+   0263 DD 9E FE      [19]  480 	sbc	a, -2 (ix)
+   0266 DD 77 FE      [19]  481 	ld	-2 (ix),a
+   0269 7A            [ 4]  482 	ld	a,d
+   026A DD 9E FF      [19]  483 	sbc	a, -1 (ix)
+   026D DD 77 FF      [19]  484 	ld	-1 (ix),a
+                            485 ;boot_rom.c:253: printf("int summ=%ld %ld uS\n",summ,end*i);
+   0270 DD 5E E4      [19]  486 	ld	e,-28 (ix)
+   0273 DD 56 E5      [19]  487 	ld	d,-27 (ix)
+   0276 DD 7E E5      [19]  488 	ld	a,-27 (ix)
+   0279 17            [ 4]  489 	rla
+   027A 9F            [ 4]  490 	sbc	a, a
+   027B 6F            [ 4]  491 	ld	l,a
+   027C 67            [ 4]  492 	ld	h,a
+   027D E5            [11]  493 	push	hl
+   027E D5            [11]  494 	push	de
+   027F DD 6E FE      [19]  495 	ld	l,-2 (ix)
+   0282 DD 66 FF      [19]  496 	ld	h,-1 (ix)
+   0285 E5            [11]  497 	push	hl
+   0286 DD 6E FC      [19]  498 	ld	l,-4 (ix)
+   0289 DD 66 FD      [19]  499 	ld	h,-3 (ix)
+   028C E5            [11]  500 	push	hl
+   028D CDr00r00      [17]  501 	call	__mullong
+   0290 F1            [10]  502 	pop	af
+   0291 F1            [10]  503 	pop	af
+   0292 F1            [10]  504 	pop	af
+   0293 F1            [10]  505 	pop	af
+   0294 EB            [ 4]  506 	ex	de, hl
+   0295 01r39r04      [10]  507 	ld	bc,#___str_1
+   0298 E5            [11]  508 	push	hl
+   0299 D5            [11]  509 	push	de
+   029A DD 6E F6      [19]  510 	ld	l,-10 (ix)
+   029D DD 66 F7      [19]  511 	ld	h,-9 (ix)
+   02A0 E5            [11]  512 	push	hl
+   02A1 DD 6E F4      [19]  513 	ld	l,-12 (ix)
+   02A4 DD 66 F5      [19]  514 	ld	h,-11 (ix)
+   02A7 E5            [11]  515 	push	hl
+   02A8 C5            [11]  516 	push	bc
+   02A9 CDr00r00      [17]  517 	call	_printf
+   02AC 21 0A 00      [10]  518 	ld	hl,#10
+   02AF 39            [11]  519 	add	hl,sp
+   02B0 F9            [ 6]  520 	ld	sp,hl
+                            521 ;boot_rom.c:234: for(i=1;i<=16;i*=2)
+   02B1 DD CB E4 26   [23]  522 	sla	-28 (ix)
+   02B5 DD CB E5 16   [23]  523 	rl	-27 (ix)
+   02B9 3E 10         [ 7]  524 	ld	a,#0x10
+   02BB DD BE E4      [19]  525 	cp	a, -28 (ix)
+   02BE 3E 00         [ 7]  526 	ld	a,#0x00
+   02C0 DD 9E E5      [19]  527 	sbc	a, -27 (ix)
+   02C3 E2rC8r02      [10]  528 	jp	PO, 00171$
+   02C6 EE 80         [ 7]  529 	xor	a, #0x80
+   02C8                     530 00171$:
+   02C8 F2rEEr00      [10]  531 	jp	P,00112$
+                            532 ;boot_rom.c:257: now = (xx_time_get_time());
+   02CB CDrD6r00      [17]  533 	call	_xx_time_get_time
+   02CE DD 75 EC      [19]  534 	ld	-20 (ix),l
+   02D1 DD 74 ED      [19]  535 	ld	-19 (ix),h
+   02D4 DD 73 EE      [19]  536 	ld	-18 (ix),e
+   02D7 DD 72 EF      [19]  537 	ld	-17 (ix),d
+                            538 ;boot_rom.c:259: fsumm = 0.1f;
+   02DA DD 36 E0 CD   [19]  539 	ld	-32 (ix),#0xCD
+   02DE DD 36 E1 CC   [19]  540 	ld	-31 (ix),#0xCC
+   02E2 DD 36 E2 CC   [19]  541 	ld	-30 (ix),#0xCC
+   02E6 DD 36 E3 3D   [19]  542 	ld	-29 (ix),#0x3D
+                            543 ;boot_rom.c:260: for( k=1;k<1000;k++)
+   02EA 01 01 00      [10]  544 	ld	bc,#0x0001
+   02ED                     545 00114$:
+                            546 ;boot_rom.c:262: fsumm+=k;
+   02ED C5            [11]  547 	push	bc
+   02EE C5            [11]  548 	push	bc
+   02EF CDr00r00      [17]  549 	call	___sint2fs
+   02F2 F1            [10]  550 	pop	af
+   02F3 EB            [ 4]  551 	ex	de, hl
+   02F4 E5            [11]  552 	push	hl
+   02F5 D5            [11]  553 	push	de
+   02F6 DD 6E E2      [19]  554 	ld	l,-30 (ix)
+   02F9 DD 66 E3      [19]  555 	ld	h,-29 (ix)
+   02FC E5            [11]  556 	push	hl
+   02FD DD 6E E0      [19]  557 	ld	l,-32 (ix)
+   0300 DD 66 E1      [19]  558 	ld	h,-31 (ix)
+   0303 E5            [11]  559 	push	hl
+   0304 CDr00r00      [17]  560 	call	___fsadd
+   0307 F1            [10]  561 	pop	af
+   0308 F1            [10]  562 	pop	af
+   0309 F1            [10]  563 	pop	af
+   030A F1            [10]  564 	pop	af
+   030B C1            [10]  565 	pop	bc
+   030C DD 75 E0      [19]  566 	ld	-32 (ix),l
+   030F DD 74 E1      [19]  567 	ld	-31 (ix),h
+   0312 DD 73 E2      [19]  568 	ld	-30 (ix),e
+   0315 DD 72 E3      [19]  569 	ld	-29 (ix),d
+                            570 ;boot_rom.c:260: for( k=1;k<1000;k++)
+   0318 03            [ 6]  571 	inc	bc
+   0319 79            [ 4]  572 	ld	a,c
+   031A D6 E8         [ 7]  573 	sub	a, #0xE8
+   031C 78            [ 4]  574 	ld	a,b
+   031D 17            [ 4]  575 	rla
+   031E 3F            [ 4]  576 	ccf
+   031F 1F            [ 4]  577 	rra
+   0320 DE 83         [ 7]  578 	sbc	a, #0x83
+   0322 38 C9         [12]  579 	jr	C,00114$
+                            580 ;boot_rom.c:264: end = (xx_time_get_time())-now;
+   0324 CDrD6r00      [17]  581 	call	_xx_time_get_time
+   0327 DD 72 FF      [19]  582 	ld	-1 (ix),d
+   032A DD 73 FE      [19]  583 	ld	-2 (ix),e
+   032D DD 74 FD      [19]  584 	ld	-3 (ix),h
+   0330 DD 75 FC      [19]  585 	ld	-4 (ix), l
+   0333 7D            [ 4]  586 	ld	a, l
+   0334 DD 96 EC      [19]  587 	sub	a, -20 (ix)
+   0337 DD 77 FC      [19]  588 	ld	-4 (ix),a
+   033A DD 7E FD      [19]  589 	ld	a,-3 (ix)
+   033D DD 9E ED      [19]  590 	sbc	a, -19 (ix)
+   0340 DD 77 FD      [19]  591 	ld	-3 (ix),a
+   0343 DD 7E FE      [19]  592 	ld	a,-2 (ix)
+   0346 DD 9E EE      [19]  593 	sbc	a, -18 (ix)
+   0349 DD 77 FE      [19]  594 	ld	-2 (ix),a
+   034C DD 7E FF      [19]  595 	ld	a,-1 (ix)
+   034F DD 9E EF      [19]  596 	sbc	a, -17 (ix)
+   0352 DD 77 FF      [19]  597 	ld	-1 (ix),a
+   0355 21 10 00      [10]  598 	ld	hl, #16
+   0358 39            [11]  599 	add	hl, sp
+   0359 EB            [ 4]  600 	ex	de, hl
+   035A 21 1C 00      [10]  601 	ld	hl, #28
+   035D 39            [11]  602 	add	hl, sp
+   035E 01 04 00      [10]  603 	ld	bc, #4
+   0361 ED B0         [21]  604 	ldir
+                            605 ;boot_rom.c:265: printf("float summ=%ld %ld uS\n",(int32_t)fsumm,end);
+   0363 DD 6E E2      [19]  606 	ld	l,-30 (ix)
+   0366 DD 66 E3      [19]  607 	ld	h,-29 (ix)
+   0369 E5            [11]  608 	push	hl
+   036A DD 6E E0      [19]  609 	ld	l,-32 (ix)
+   036D DD 66 E1      [19]  610 	ld	h,-31 (ix)
+   0370 E5            [11]  611 	push	hl
+   0371 CDr00r00      [17]  612 	call	___fs2slong
+   0374 F1            [10]  613 	pop	af
+   0375 F1            [10]  614 	pop	af
+   0376 4D            [ 4]  615 	ld	c,l
+   0377 44            [ 4]  616 	ld	b,h
+   0378 DD 6E F2      [19]  617 	ld	l,-14 (ix)
+   037B DD 66 F3      [19]  618 	ld	h,-13 (ix)
+   037E E5            [11]  619 	push	hl
+   037F DD 6E F0      [19]  620 	ld	l,-16 (ix)
+   0382 DD 66 F1      [19]  621 	ld	h,-15 (ix)
+   0385 E5            [11]  622 	push	hl
+   0386 D5            [11]  623 	push	de
+   0387 C5            [11]  624 	push	bc
+   0388 21r4Er04      [10]  625 	ld	hl,#___str_2
+   038B E5            [11]  626 	push	hl
+   038C CDr00r00      [17]  627 	call	_printf
+   038F 21 0A 00      [10]  628 	ld	hl,#10
+   0392 39            [11]  629 	add	hl,sp
+   0393 F9            [ 6]  630 	ld	sp,hl
+                            631 ;boot_rom.c:268: now = (xx_time_get_time());
+   0394 CDrD6r00      [17]  632 	call	_xx_time_get_time
+   0397 DD 75 FC      [19]  633 	ld	-4 (ix),l
+   039A DD 74 FD      [19]  634 	ld	-3 (ix),h
+   039D DD 73 FE      [19]  635 	ld	-2 (ix),e
+   03A0 DD 72 FF      [19]  636 	ld	-1 (ix),d
+                            637 ;boot_rom.c:269: summ = 0;
+   03A3 AF            [ 4]  638 	xor	a, a
+   03A4 DD 77 E8      [19]  639 	ld	-24 (ix),a
+   03A7 DD 77 E9      [19]  640 	ld	-23 (ix),a
+   03AA DD 77 EA      [19]  641 	ld	-22 (ix),a
+   03AD DD 77 EB      [19]  642 	ld	-21 (ix),a
+                            643 ;boot_rom.c:270: for( k=1;k<1000;k++)
+   03B0 11 01 00      [10]  644 	ld	de,#0x0001
+   03B3                     645 00116$:
+                            646 ;boot_rom.c:272: summ+=k;
+   03B3 63            [ 4]  647 	ld	h,e
+   03B4 7A            [ 4]  648 	ld	a,d
+   03B5 6F            [ 4]  649 	ld	l,a
+   03B6 17            [ 4]  650 	rla
+   03B7 9F            [ 4]  651 	sbc	a, a
+   03B8 4F            [ 4]  652 	ld	c,a
+   03B9 47            [ 4]  653 	ld	b,a
+   03BA DD 7E E8      [19]  654 	ld	a,-24 (ix)
+   03BD 84            [ 4]  655 	add	a, h
+   03BE DD 77 E8      [19]  656 	ld	-24 (ix),a
+   03C1 DD 7E E9      [19]  657 	ld	a,-23 (ix)
+   03C4 8D            [ 4]  658 	adc	a, l
+   03C5 DD 77 E9      [19]  659 	ld	-23 (ix),a
+   03C8 DD 7E EA      [19]  660 	ld	a,-22 (ix)
+   03CB 89            [ 4]  661 	adc	a, c
+   03CC DD 77 EA      [19]  662 	ld	-22 (ix),a
+   03CF DD 7E EB      [19]  663 	ld	a,-21 (ix)
+   03D2 88            [ 4]  664 	adc	a, b
+   03D3 DD 77 EB      [19]  665 	ld	-21 (ix),a
+                            666 ;boot_rom.c:270: for( k=1;k<1000;k++)
+   03D6 13            [ 6]  667 	inc	de
+   03D7 7B            [ 4]  668 	ld	a,e
+   03D8 D6 E8         [ 7]  669 	sub	a, #0xE8
+   03DA 7A            [ 4]  670 	ld	a,d
+   03DB 17            [ 4]  671 	rla
+   03DC 3F            [ 4]  672 	ccf
+   03DD 1F            [ 4]  673 	rra
+   03DE DE 83         [ 7]  674 	sbc	a, #0x83
+   03E0 38 D1         [12]  675 	jr	C,00116$
+                            676 ;boot_rom.c:274: end = (xx_time_get_time())-now;
+   03E2 CDrD6r00      [17]  677 	call	_xx_time_get_time
+   03E5 DD 72 F7      [19]  678 	ld	-9 (ix),d
+   03E8 DD 73 F6      [19]  679 	ld	-10 (ix),e
+   03EB DD 74 F5      [19]  680 	ld	-11 (ix),h
+   03EE DD 75 F4      [19]  681 	ld	-12 (ix), l
+   03F1 7D            [ 4]  682 	ld	a, l
+   03F2 DD 96 FC      [19]  683 	sub	a, -4 (ix)
+   03F5 5F            [ 4]  684 	ld	e,a
+   03F6 DD 7E F5      [19]  685 	ld	a,-11 (ix)
+   03F9 DD 9E FD      [19]  686 	sbc	a, -3 (ix)
+   03FC 57            [ 4]  687 	ld	d,a
+   03FD DD 7E F6      [19]  688 	ld	a,-10 (ix)
+   0400 DD 9E FE      [19]  689 	sbc	a, -2 (ix)
+   0403 6F            [ 4]  690 	ld	l,a
+   0404 DD 7E F7      [19]  691 	ld	a,-9 (ix)
+   0407 DD 9E FF      [19]  692 	sbc	a, -1 (ix)
+   040A 67            [ 4]  693 	ld	h,a
+                            694 ;boot_rom.c:275: printf("int summ=%ld %ld uS\n",summ,end);
+   040B 01r39r04      [10]  695 	ld	bc,#___str_1
+   040E E5            [11]  696 	push	hl
+   040F D5            [11]  697 	push	de
+   0410 DD 6E EA      [19]  698 	ld	l,-22 (ix)
+   0413 DD 66 EB      [19]  699 	ld	h,-21 (ix)
+   0416 E5            [11]  700 	push	hl
+   0417 DD 6E E8      [19]  701 	ld	l,-24 (ix)
+   041A DD 66 E9      [19]  702 	ld	h,-23 (ix)
+   041D E5            [11]  703 	push	hl
+   041E C5            [11]  704 	push	bc
+   041F CDr00r00      [17]  705 	call	_printf
+   0422 21 0A 00      [10]  706 	ld	hl,#10
+   0425 39            [11]  707 	add	hl,sp
+   0426 F9            [ 6]  708 	ld	sp,hl
+   0427 DD F9         [10]  709 	ld	sp, ix
+   0429 DD E1         [14]  710 	pop	ix
+   042B C9            [10]  711 	ret
+   042C                     712 ___str_0:
+   042C 66 75 6C 6C 20 25   713 	.ascii "full %ld uS"
+        6C 64 20 75 53
+   0437 0A                  714 	.db 0x0A
+   0438 00                  715 	.db 0x00
+   0439                     716 ___str_1:
+   0439 69 6E 74 20 73 75   717 	.ascii "int summ=%ld %ld uS"
+        6D 6D 3D 25 6C 64
+        20 25 6C 64 20 75
+        53
+   044C 0A                  718 	.db 0x0A
+   044D 00                  719 	.db 0x00
+   044E                     720 ___str_2:
+   044E 66 6C 6F 61 74 20   721 	.ascii "float summ=%ld %ld uS"
+        73 75 6D 6D 3D 25
+        6C 64 20 25 6C 64
+        20 75 53
+   0463 0A                  722 	.db 0x0A
+   0464 00                  723 	.db 0x00
+                            724 ;boot_rom.c:281: void main() 
+                            725 ;	---------------------------------
+                            726 ; Function main
+                            727 ; ---------------------------------
+   0465                     728 _main::
+   0465 DD E5         [15]  729 	push	ix
+   0467 DD 21 00 00   [14]  730 	ld	ix,#0
+   046B DD 39         [15]  731 	add	ix,sp
+   046D F5            [11]  732 	push	af
+   046E F5            [11]  733 	push	af
+                            734 ;boot_rom.c:296: __endasm;
+   046F FB            [ 4]  735 	ei
+   0470 ED 56         [ 8]  736 	im 1
+                            737 ;boot_rom.c:297: IO80 = 3;
+   0472 3E 03         [ 7]  738 	ld	a,#0x03
+   0474 D3 80         [11]  739 	out	(_IO80),a
+                            740 ;boot_rom.c:298: printf("A=%02x B=%02x C=%02x\n",A,B,C);
+   0476 11r6Cr06      [10]  741 	ld	de,#___str_3
+   0479 2Ar08r00      [16]  742 	ld	hl,(_C)
+   047C E5            [11]  743 	push	hl
+   047D 2Ar06r00      [16]  744 	ld	hl,(_B)
+   0480 E5            [11]  745 	push	hl
+   0481 2Ar04r00      [16]  746 	ld	hl,(_A)
+   0484 E5            [11]  747 	push	hl
+   0485 D5            [11]  748 	push	de
+   0486 CDr00r00      [17]  749 	call	_printf
+   0489 21 08 00      [10]  750 	ld	hl,#8
+   048C 39            [11]  751 	add	hl,sp
+   048D F9            [ 6]  752 	ld	sp,hl
+                            753 ;boot_rom.c:299: printf("\n\n Program start\n");
+   048E 21r82r06      [10]  754 	ld	hl,#___str_4
+   0491 E5            [11]  755 	push	hl
+   0492 CDr00r00      [17]  756 	call	_printf
+   0495 F1            [10]  757 	pop	af
+                            758 ;boot_rom.c:315: printf("A=%02x B=%02x C=%02x\n",A,B,C);
+   0496 11r6Cr06      [10]  759 	ld	de,#___str_3
+   0499 2Ar08r00      [16]  760 	ld	hl,(_C)
+   049C E5            [11]  761 	push	hl
+   049D 2Ar06r00      [16]  762 	ld	hl,(_B)
+   04A0 E5            [11]  763 	push	hl
+   04A1 2Ar04r00      [16]  764 	ld	hl,(_A)
+   04A4 E5            [11]  765 	push	hl
+   04A5 D5            [11]  766 	push	de
+   04A6 CDr00r00      [17]  767 	call	_printf
+   04A9 21 08 00      [10]  768 	ld	hl,#8
+   04AC 39            [11]  769 	add	hl,sp
+   04AD F9            [ 6]  770 	ld	sp,hl
+                            771 ;boot_rom.c:316: printf("A=%02x B=%02x C=%02x\n",A,B,C);
+   04AE 11r6Cr06      [10]  772 	ld	de,#___str_3
+   04B1 2Ar08r00      [16]  773 	ld	hl,(_C)
+   04B4 E5            [11]  774 	push	hl
+   04B5 2Ar06r00      [16]  775 	ld	hl,(_B)
+   04B8 E5            [11]  776 	push	hl
+   04B9 2Ar04r00      [16]  777 	ld	hl,(_A)
+   04BC E5            [11]  778 	push	hl
+   04BD D5            [11]  779 	push	de
+   04BE CDr00r00      [17]  780 	call	_printf
+   04C1 21 08 00      [10]  781 	ld	hl,#8
+   04C4 39            [11]  782 	add	hl,sp
+   04C5 F9            [ 6]  783 	ld	sp,hl
+                            784 ;boot_rom.c:317: perfTest();
+   04C6 CDrD9r00      [17]  785 	call	_perfTest
+                            786 ;boot_rom.c:318: perfTest();
+   04C9 CDrD9r00      [17]  787 	call	_perfTest
+                            788 ;boot_rom.c:319: printf("A=%02x B=%02x C=%02x\n",A,B,C);
+   04CC 11r6Cr06      [10]  789 	ld	de,#___str_3
+   04CF 2Ar08r00      [16]  790 	ld	hl,(_C)
+   04D2 E5            [11]  791 	push	hl
+   04D3 2Ar06r00      [16]  792 	ld	hl,(_B)
+   04D6 E5            [11]  793 	push	hl
+   04D7 2Ar04r00      [16]  794 	ld	hl,(_A)
+   04DA E5            [11]  795 	push	hl
+   04DB D5            [11]  796 	push	de
+   04DC CDr00r00      [17]  797 	call	_printf
+   04DF 21 08 00      [10]  798 	ld	hl,#8
+   04E2 39            [11]  799 	add	hl,sp
+   04E3 F9            [ 6]  800 	ld	sp,hl
+                            801 ;boot_rom.c:320: stage = 0;
+   04E4 01 00 00      [10]  802 	ld	bc,#0x0000
+                            803 ;boot_rom.c:321: printf("A=%02x B=%02x C=%02x\n",A,B,C);
+   04E7 11r6Cr06      [10]  804 	ld	de,#___str_3
+   04EA C5            [11]  805 	push	bc
+   04EB 2Ar08r00      [16]  806 	ld	hl,(_C)
+   04EE E5            [11]  807 	push	hl
+   04EF 2Ar06r00      [16]  808 	ld	hl,(_B)
+   04F2 E5            [11]  809 	push	hl
+   04F3 2Ar04r00      [16]  810 	ld	hl,(_A)
+   04F6 E5            [11]  811 	push	hl
+   04F7 D5            [11]  812 	push	de
+   04F8 CDr00r00      [17]  813 	call	_printf
+   04FB 21 08 00      [10]  814 	ld	hl,#8
+   04FE 39            [11]  815 	add	hl,sp
+   04FF F9            [ 6]  816 	ld	sp,hl
+   0500 C1            [10]  817 	pop	bc
+                            818 ;boot_rom.c:322: for(k=0x00000;k<0x80000;k++)
+   0501 AF            [ 4]  819 	xor	a, a
+   0502 DD 77 FC      [19]  820 	ld	-4 (ix),a
+   0505 DD 77 FD      [19]  821 	ld	-3 (ix),a
+   0508 DD 77 FE      [19]  822 	ld	-2 (ix),a
+   050B DD 77 FF      [19]  823 	ld	-1 (ix),a
+   050E                     824 00141$:
+                            825 ;boot_rom.c:325: L2=(k>>16)&0xff;
+   050E F5            [11]  826 	push	af
+   050F DD 66 FC      [19]  827 	ld	h,-4 (ix)
+   0512 DD 6E FD      [19]  828 	ld	l,-3 (ix)
+   0515 DD 56 FE      [19]  829 	ld	d,-2 (ix)
+   0518 DD 5E FF      [19]  830 	ld	e,-1 (ix)
+   051B F1            [10]  831 	pop	af
+   051C 3E 10         [ 7]  832 	ld	a,#0x10
+   051E                     833 00243$:
+   051E CB 2B         [ 8]  834 	sra	e
+   0520 CB 1A         [ 8]  835 	rr	d
+   0522 CB 1D         [ 8]  836 	rr	l
+   0524 CB 1C         [ 8]  837 	rr	h
+   0526 3D            [ 4]  838 	dec	a
+   0527 20 F5         [12]  839 	jr	NZ,00243$
+   0529 7C            [ 4]  840 	ld	a,h
+   052A D3 07         [11]  841 	out	(_L2),a
+                            842 ;boot_rom.c:326: L1=(k>>8)&0xff;
+   052C F5            [11]  843 	push	af
+   052D DD 6E FC      [19]  844 	ld	l,-4 (ix)
+   0530 DD 66 FD      [19]  845 	ld	h,-3 (ix)
+   0533 DD 5E FE      [19]  846 	ld	e,-2 (ix)
+   0536 DD 56 FF      [19]  847 	ld	d,-1 (ix)
+   0539 F1            [10]  848 	pop	af
+   053A 3E 08         [ 7]  849 	ld	a,#0x08
+   053C                     850 00245$:
+   053C CB 2A         [ 8]  851 	sra	d
+   053E CB 1B         [ 8]  852 	rr	e
+   0540 CB 1C         [ 8]  853 	rr	h
+   0542 CB 1D         [ 8]  854 	rr	l
+   0544 3D            [ 4]  855 	dec	a
+   0545 20 F5         [12]  856 	jr	NZ,00245$
+   0547 7D            [ 4]  857 	ld	a,l
+   0548 D3 06         [11]  858 	out	(_L1),a
+                            859 ;boot_rom.c:327: L0=(k)&0xff;
+   054A DD 7E FC      [19]  860 	ld	a, -4 (ix)
+   054D D3 05         [11]  861 	out	(_L0),a
+                            862 ;boot_rom.c:328: t = L1;
+   054F DB 06         [11]  863 	in	a,(_L1)
+   0551 6F            [ 4]  864 	ld	l,a
+                            865 ;boot_rom.c:329: while(!(t&1))
+   0552                     866 00101$:
+   0552 CB 45         [ 8]  867 	bit	0, l
+   0554 20 05         [12]  868 	jr	NZ,00103$
+                            869 ;boot_rom.c:331: t=L1;
+   0556 DB 06         [11]  870 	in	a,(_L1)
+   0558 6F            [ 4]  871 	ld	l,a
+   0559 18 F7         [12]  872 	jr	00101$
+   055B                     873 00103$:
+                            874 ;boot_rom.c:334: t=L0;
+   055B DB 05         [11]  875 	in	a,(_L0)
+   055D 6F            [ 4]  876 	ld	l,a
+   055E 26 00         [ 7]  877 	ld	h,#0x00
+                            878 ;boot_rom.c:335: if(t=='P')   				stage = 1;
+   0560 7D            [ 4]  879 	ld	a,l
+   0561 D6 50         [ 7]  880 	sub	a,#0x50
+   0563 20 06         [12]  881 	jr	NZ,00105$
+   0565 B4            [ 4]  882 	or	a,h
+   0566 20 03         [12]  883 	jr	NZ,00105$
+   0568 01 01 00      [10]  884 	ld	bc,#0x0001
+   056B                     885 00105$:
+                            886 ;boot_rom.c:336: if(t=='r'&&stage==1)		stage=2;
+   056B 7D            [ 4]  887 	ld	a,l
+   056C D6 72         [ 7]  888 	sub	a,#0x72
+   056E 20 07         [12]  889 	jr	NZ,00251$
+   0570 B4            [ 4]  890 	or	a,h
+   0571 20 04         [12]  891 	jr	NZ,00251$
+   0573 3E 01         [ 7]  892 	ld	a,#0x01
+   0575 18 01         [12]  893 	jr	00252$
+   0577                     894 00251$:
+   0577 AF            [ 4]  895 	xor	a,a
+   0578                     896 00252$:
+   0578 57            [ 4]  897 	ld	d,a
+   0579 B7            [ 4]  898 	or	a, a
+   057A 28 0B         [12]  899 	jr	Z,00107$
+   057C 79            [ 4]  900 	ld	a,c
+   057D 3D            [ 4]  901 	dec	a
+   057E 20 07         [12]  902 	jr	NZ,00107$
+   0580 78            [ 4]  903 	ld	a,b
+   0581 B7            [ 4]  904 	or	a, a
+   0582 20 03         [12]  905 	jr	NZ,00107$
+   0584 01 02 00      [10]  906 	ld	bc,#0x0002
+   0587                     907 00107$:
+                            908 ;boot_rom.c:337: if(t=='o'&&stage==2)		stage=3;
+   0587 7D            [ 4]  909 	ld	a,l
+   0588 D6 6F         [ 7]  910 	sub	a,#0x6F
+   058A 20 0E         [12]  911 	jr	NZ,00110$
+   058C B4            [ 4]  912 	or	a,h
+   058D 20 0B         [12]  913 	jr	NZ,00110$
+   058F 79            [ 4]  914 	ld	a,c
+   0590 D6 02         [ 7]  915 	sub	a,#0x02
+   0592 20 06         [12]  916 	jr	NZ,00110$
+   0594 B0            [ 4]  917 	or	a,b
+   0595 20 03         [12]  918 	jr	NZ,00110$
+   0597 01 03 00      [10]  919 	ld	bc,#0x0003
+   059A                     920 00110$:
+                            921 ;boot_rom.c:338: if(t=='g'&&stage==3)		stage=4;
+   059A 7D            [ 4]  922 	ld	a,l
+   059B D6 67         [ 7]  923 	sub	a,#0x67
+   059D 20 0E         [12]  924 	jr	NZ,00113$
+   059F B4            [ 4]  925 	or	a,h
+   05A0 20 0B         [12]  926 	jr	NZ,00113$
+   05A2 79            [ 4]  927 	ld	a,c
+   05A3 D6 03         [ 7]  928 	sub	a,#0x03
+   05A5 20 06         [12]  929 	jr	NZ,00113$
+   05A7 B0            [ 4]  930 	or	a,b
+   05A8 20 03         [12]  931 	jr	NZ,00113$
+   05AA 01 04 00      [10]  932 	ld	bc,#0x0004
+   05AD                     933 00113$:
+                            934 ;boot_rom.c:339: if(t=='r'&&stage==4)		stage=5;
+   05AD 7A            [ 4]  935 	ld	a,d
+   05AE B7            [ 4]  936 	or	a, a
+   05AF 28 0B         [12]  937 	jr	Z,00116$
+   05B1 79            [ 4]  938 	ld	a,c
+   05B2 D6 04         [ 7]  939 	sub	a,#0x04
+   05B4 20 06         [12]  940 	jr	NZ,00116$
+   05B6 B0            [ 4]  941 	or	a,b
+   05B7 20 03         [12]  942 	jr	NZ,00116$
+   05B9 01 05 00      [10]  943 	ld	bc,#0x0005
+   05BC                     944 00116$:
+                            945 ;boot_rom.c:340: if(t=='a'&&stage==5)		stage=6;
+   05BC 7D            [ 4]  946 	ld	a,l
+   05BD D6 61         [ 7]  947 	sub	a,#0x61
+   05BF 20 07         [12]  948 	jr	NZ,00265$
+   05C1 B4            [ 4]  949 	or	a,h
+   05C2 20 04         [12]  950 	jr	NZ,00265$
+   05C4 3E 01         [ 7]  951 	ld	a,#0x01
+   05C6 18 01         [12]  952 	jr	00266$
+   05C8                     953 00265$:
+   05C8 AF            [ 4]  954 	xor	a,a
+   05C9                     955 00266$:
+   05C9 57            [ 4]  956 	ld	d,a
+   05CA B7            [ 4]  957 	or	a, a
+   05CB 28 0B         [12]  958 	jr	Z,00119$
+   05CD 79            [ 4]  959 	ld	a,c
+   05CE D6 05         [ 7]  960 	sub	a,#0x05
+   05D0 20 06         [12]  961 	jr	NZ,00119$
+   05D2 B0            [ 4]  962 	or	a,b
+   05D3 20 03         [12]  963 	jr	NZ,00119$
+   05D5 01 06 00      [10]  964 	ld	bc,#0x0006
+   05D8                     965 00119$:
+                            966 ;boot_rom.c:341: if(t=='m'&&stage==6)		stage=7;
+   05D8 7D            [ 4]  967 	ld	a,l
+   05D9 D6 6D         [ 7]  968 	sub	a,#0x6D
+   05DB 20 0E         [12]  969 	jr	NZ,00122$
+   05DD B4            [ 4]  970 	or	a,h
+   05DE 20 0B         [12]  971 	jr	NZ,00122$
+   05E0 79            [ 4]  972 	ld	a,c
+   05E1 D6 06         [ 7]  973 	sub	a,#0x06
+   05E3 20 06         [12]  974 	jr	NZ,00122$
+   05E5 B0            [ 4]  975 	or	a,b
+   05E6 20 03         [12]  976 	jr	NZ,00122$
+   05E8 01 07 00      [10]  977 	ld	bc,#0x0007
+   05EB                     978 00122$:
+                            979 ;boot_rom.c:342: if(t==' '&&stage==7)		stage=8;
+   05EB 7D            [ 4]  980 	ld	a,l
+   05EC D6 20         [ 7]  981 	sub	a,#0x20
+   05EE 20 0E         [12]  982 	jr	NZ,00125$
+   05F0 B4            [ 4]  983 	or	a,h
+   05F1 20 0B         [12]  984 	jr	NZ,00125$
+   05F3 79            [ 4]  985 	ld	a,c
+   05F4 D6 07         [ 7]  986 	sub	a,#0x07
+   05F6 20 06         [12]  987 	jr	NZ,00125$
+   05F8 B0            [ 4]  988 	or	a,b
+   05F9 20 03         [12]  989 	jr	NZ,00125$
+   05FB 01 08 00      [10]  990 	ld	bc,#0x0008
+   05FE                     991 00125$:
+                            992 ;boot_rom.c:343: if(t=='s'&&stage==8)		stage=9;
+   05FE 7D            [ 4]  993 	ld	a,l
+   05FF D6 73         [ 7]  994 	sub	a,#0x73
+   0601 20 0E         [12]  995 	jr	NZ,00128$
+   0603 B4            [ 4]  996 	or	a,h
+   0604 20 0B         [12]  997 	jr	NZ,00128$
+   0606 79            [ 4]  998 	ld	a,c
+   0607 D6 08         [ 7]  999 	sub	a,#0x08
+   0609 20 06         [12] 1000 	jr	NZ,00128$
+   060B B0            [ 4] 1001 	or	a,b
+   060C 20 03         [12] 1002 	jr	NZ,00128$
+   060E 01 09 00      [10] 1003 	ld	bc,#0x0009
+   0611                    1004 00128$:
+                           1005 ;boot_rom.c:344: if(t=='a'&&stage==9)		stage=10;
+   0611 7A            [ 4] 1006 	ld	a,d
+   0612 B7            [ 4] 1007 	or	a, a
+   0613 28 0B         [12] 1008 	jr	Z,00131$
+   0615 79            [ 4] 1009 	ld	a,c
+   0616 D6 09         [ 7] 1010 	sub	a,#0x09
+   0618 20 06         [12] 1011 	jr	NZ,00131$
+   061A B0            [ 4] 1012 	or	a,b
+   061B 20 03         [12] 1013 	jr	NZ,00131$
+   061D 01 0A 00      [10] 1014 	ld	bc,#0x000A
+   0620                    1015 00131$:
+                           1016 ;boot_rom.c:345: if(stage==10)
+   0620 79            [ 4] 1017 	ld	a,c
+   0621 D6 0A         [ 7] 1018 	sub	a,#0x0A
+   0623 20 23         [12] 1019 	jr	NZ,00142$
+   0625 B0            [ 4] 1020 	or	a,b
+   0626 20 20         [12] 1021 	jr	NZ,00142$
+                           1022 ;boot_rom.c:347: stage = 0;
+   0628 01 00 00      [10] 1023 	ld	bc,#0x0000
+                           1024 ;boot_rom.c:348: printf("k=%06lx t=%02x!!!\n",k,t);
+   062B 11r94r06      [10] 1025 	ld	de,#___str_5
+   062E C5            [11] 1026 	push	bc
+   062F E5            [11] 1027 	push	hl
+   0630 DD 6E FE      [19] 1028 	ld	l,-2 (ix)
+   0633 DD 66 FF      [19] 1029 	ld	h,-1 (ix)
+   0636 E5            [11] 1030 	push	hl
+   0637 DD 6E FC      [19] 1031 	ld	l,-4 (ix)
+   063A DD 66 FD      [19] 1032 	ld	h,-3 (ix)
+   063D E5            [11] 1033 	push	hl
+   063E D5            [11] 1034 	push	de
+   063F CDr00r00      [17] 1035 	call	_printf
+   0642 21 08 00      [10] 1036 	ld	hl,#8
+   0645 39            [11] 1037 	add	hl,sp
+   0646 F9            [ 6] 1038 	ld	sp,hl
+   0647 C1            [10] 1039 	pop	bc
+                           1040 ;boot_rom.c:352: printf("k=%06lx t=%02x\n",k,t);
+   0648                    1041 00142$:
+                           1042 ;boot_rom.c:322: for(k=0x00000;k<0x80000;k++)
+   0648 DD 34 FC      [23] 1043 	inc	-4 (ix)
+   064B 20 0D         [12] 1044 	jr	NZ,00285$
+   064D DD 34 FD      [23] 1045 	inc	-3 (ix)
+   0650 20 08         [12] 1046 	jr	NZ,00285$
+   0652 DD 34 FE      [23] 1047 	inc	-2 (ix)
+   0655 20 03         [12] 1048 	jr	NZ,00285$
+   0657 DD 34 FF      [23] 1049 	inc	-1 (ix)
+   065A                    1050 00285$:
+   065A DD 7E FE      [19] 1051 	ld	a,-2 (ix)
+   065D D6 08         [ 7] 1052 	sub	a, #0x08
+   065F DD 7E FF      [19] 1053 	ld	a,-1 (ix)
+   0662 17            [ 4] 1054 	rla
+   0663 3F            [ 4] 1055 	ccf
+   0664 1F            [ 4] 1056 	rra
+   0665 DE 80         [ 7] 1057 	sbc	a, #0x80
+   0667 DAr0Er05      [10] 1058 	jp	C,00141$
+                           1059 ;boot_rom.c:356: while(1);
+   066A                    1060 00139$:
+   066A 18 FE         [12] 1061 	jr	00139$
+   066C                    1062 ___str_3:
+   066C 41 3D 25 30 32 78  1063 	.ascii "A=%02x B=%02x C=%02x"
+        20 42 3D 25 30 32
+        78 20 43 3D 25 30
+        32 78
+   0680 0A                 1064 	.db 0x0A
+   0681 00                 1065 	.db 0x00
+   0682                    1066 ___str_4:
+   0682 0A                 1067 	.db 0x0A
+   0683 0A                 1068 	.db 0x0A
+   0684 20 50 72 6F 67 72  1069 	.ascii " Program start"
+        61 6D 20 73 74 61
+        72 74
+   0692 0A                 1070 	.db 0x0A
+   0693 00                 1071 	.db 0x00
+   0694                    1072 ___str_5:
+   0694 6B 3D 25 30 36 6C  1073 	.ascii "k=%06lx t=%02x!!!"
+        78 20 74 3D 25 30
+        32 78 21 21 21
+   06A5 0A                 1074 	.db 0x0A
+   06A6 00                 1075 	.db 0x00
+   06A7                    1076 ___str_6:
+   06A7 6B 3D 25 30 36 6C  1077 	.ascii "k=%06lx t=%02x"
+        78 20 74 3D 25 30
+        32 78
+   06B5 0A                 1078 	.db 0x0A
+   06B6 00                 1079 	.db 0x00
+                           1080 	.area _CODE
+   06B7                    1081 ___str_7:
+   06B7 68 45 4C 4C 4F 20  1082 	.ascii "hELLO dIMA"
+        64 49 4D 41
+   06C1 00                 1083 	.db 0x00
+                           1084 	.area _INITIALIZER
+   0000                    1085 __xinit__mess:
+   0000rB7r06              1086 	.dw ___str_7
+   0002                    1087 __xinit__temp1:
+   0002 00 00              1088 	.dw #0x0000
+   0004                    1089 __xinit__A:
+   0004 00 00              1090 	.dw #0x0000
+   0006                    1091 __xinit__B:
+   0006 00 00              1092 	.dw #0x0000
+   0008                    1093 __xinit__C:
+   0008 00 00              1094 	.dw #0x0000
+                           1095 	.area _CABS (ABS)

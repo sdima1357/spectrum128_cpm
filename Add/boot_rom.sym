@@ -1,0 +1,72 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 1.
+Hexadecimal [16-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =  2710 L
+    .__.ABS.                                                    =  0000 G
+    .__.CPU.                                                    =  0000 L
+    .__.H$L.                                                    =  0000 L
+  2 _A                                                             0004 GR
+  2 _B                                                             0006 GR
+  2 _C                                                             0008 GR
+  0 _CLOCK16F                                                      005A GR
+  0 _CLOCK32F                                                      0027 GR
+  0 _Delay                                                         006A GR
+  0 _HAL_GetTick                                                   00D3 GR
+    _IO2                                                        =  0002 
+    _IO4                                                        =  0004 
+    _IO60                                                       =  0060 
+    _IO61                                                       =  0061 
+    _IO62                                                       =  0062 
+    _IO63                                                       =  0063 
+    _IO80                                                       =  0080 
+    _IO81                                                       =  0081 
+    _L0                                                         =  0005 
+    _L1                                                         =  0006 
+    _L2                                                         =  0007 
+  0 __IM1_InterruptHandler                                         0000 GR
+  0 __NMI_InterruptHandler                                         000F GR
+    ___fs2slong                                                    **** GX
+    ___fsadd                                                       **** GX
+    ___sint2fs                                                     **** GX
+  0 ___str_0                                                       042C R
+  0 ___str_1                                                       0439 R
+  0 ___str_2                                                       044E R
+  0 ___str_3                                                       066C R
+  0 ___str_4                                                       0682 R
+  0 ___str_5                                                       0694 R
+  0 ___str_6                                                       06A7 R
+  0 ___str_7                                                       06B7 R
+    __divsint                                                      **** GX
+    __mullong                                                      **** GX
+  7 __xinit__A                                                     0004 R
+  7 __xinit__B                                                     0006 R
+  7 __xinit__C                                                     0008 R
+  7 __xinit__mess                                                  0000 R
+  7 __xinit__temp1                                                 0002 R
+  0 _main                                                          0465 GR
+  2 _mess                                                          0000 GR
+  0 _perfTest                                                      00D9 GR
+    _printf                                                        **** GX
+  0 _putchar                                                       0090 GR
+  1 _sarr                                                          0000 GR
+  2 _temp1                                                         0002 GR
+  0 _xx_time_get_time                                              00D6 GR
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
+Hexadecimal [16-Bits]
+
+Area Table
+
+   0 _CODE                                      size  6C2   flags    0
+   1 _DATA                                      size  FA0   flags    0
+   2 _INITIALIZED                               size    A   flags    0
+   3 _DABS                                      size    0   flags    8
+   4 _HOME                                      size    0   flags    0
+   5 _GSINIT                                    size    0   flags    0
+   6 _GSFINAL                                   size    0   flags    0
+   7 _INITIALIZER                               size    A   flags    0
+   8 _CABS                                      size    0   flags    8
+
