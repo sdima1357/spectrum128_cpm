@@ -7,7 +7,7 @@ CPM part:
 https://www.youtube.com/watch?v=-h3XCy79aJw
 
 
-Take disk from here:
+Take disk image here:
 https://obsolescence.wixsite.com/obsolescence/multicomp-fpga-cpm-demo-disk
 
 
