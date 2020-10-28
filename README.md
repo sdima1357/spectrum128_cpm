@@ -2,8 +2,6 @@
 Spectrum 128 & spectrum48 & AY-3-8910 complete emulation on stm32f407vt6 + 3.2 inch ILI9341
 USB keyboard.
 
-Spectrum part:
-https://www.youtube.com/watch?v=WKQc5I55Ji8&t=712s
 
 CPM part:
 https://www.youtube.com/watch?v=-h3XCy79aJw
@@ -14,6 +12,7 @@ https://obsolescence.wixsite.com/obsolescence/multicomp-fpga-cpm-demo-disk
 
 
 Spectrum part:
+https://www.youtube.com/watch?v=WKQc5I55Ji8&t=712s
 
 SD card:
 Partition 1 type Start 2048 : W95 FAT32 (b)     
