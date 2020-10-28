@@ -1,6 +1,6 @@
 
 Spectrum 128 & spectrum48 & AY-3-8910 complete emulation on stm32f407vt6 + 3.2 inch ILI9341
-USB keyboard.
+USB keyboard. (Delete resistor R21 1.5K: 3.3v<->USB D+.)
 
 
 CPM part:
