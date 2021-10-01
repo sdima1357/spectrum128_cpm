@@ -32,5 +32,5 @@ Z128
 MP3
    Put mp3 files here
    
-Short decription in russian:
+Short decription (russian):
 https://habr.com/ru/post/524498/   
