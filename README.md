@@ -23,11 +23,11 @@ Partition 1 type Start 2048 : W95 FAT32 (b)
 Dirs on root:
 
 Z48             
-   Put spectrum48 files here.Форматы: .TAP,.Z80,.SNA
+   Put spectrum48 files here.Input formats: .TAP,.Z80,.SNA
 
 
 Z128           
-   Put spectrum128 files here spectrum128.Форматы: .TAP,.Z80,.SNA
+   Put spectrum128 files here spectrum128. Input formats: .TAP,.Z80,.SNA
 
 MP3
    Put mp3 files here
